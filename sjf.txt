@@ -1,0 +1,42 @@
+
+def SJF():	
+	i=0
+	n=3
+	f=open("read.txt","r")
+	distlist=[dict()for i in range (n)]
+	i=0
+	a=[0 for i in range(3)]
+	for i in range(0,3):
+		line=f.readline()
+		num=line.split(" ")
+		distlist[i]={'p_n':num[0],'a_t':int(num[1]),'b_t':int(num[2])}
+		a[i]=i
+	s_t=distlist[0]['a_t']
+	
+	i=1
+	temp=0
+	temp2=0
+	totalWt=0
+	wt=[0 for i in range(3)]
+	for i in range(1,3) :
+		if(distlist[i-1]['b_t'] > distlist[i]['b_t']):
+			temp=distlist[i-1]['b_t']
+	                distlist[i-1]['b_t']=distlist[i]['b_t']
+	                distlist[i]['b_t']=temp
+		        temp2=a[i-1]
+		        a[i-1]=a[i]
+		        a[i]=temp2
+            
+	print("\nWaiting time for Job ",a[0]+1,": 0 units")
+	i=1
+	for i in range(1,3):
+	        wt[i]=distlist[i-1]['b_t']+wt[i-1]
+	        print("\nWaiting time for Job ",a[i]+1," : ",wt[i],"units \t")
+	        totalWt = totalWt + wt[i]
+	
+	print("\n\nThe total waiting time : ",totalWt,"\t")
+    	avgWt= totalWt/n
+    	print("\n\nAverage waiting time : ",avgWt,"\t\n\n")
+   
+
+SJF()
